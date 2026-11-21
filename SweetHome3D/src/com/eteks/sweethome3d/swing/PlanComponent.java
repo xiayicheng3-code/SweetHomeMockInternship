@@ -2014,7 +2014,7 @@ public class PlanComponent extends JComponent implements PlanView, Scrollable, P
     Level originallySelected = this.home.getSelectedLevel();
     Rectangle2D printedItemBounds;
     List<Selectable> printedItems;
-    if (originallySelected == null){
+    if (home.getLevels().size() == 0){
       printedItems = getPaintedItems();
       printedItemBounds = getItemsBounds(g, printedItems);
     }
