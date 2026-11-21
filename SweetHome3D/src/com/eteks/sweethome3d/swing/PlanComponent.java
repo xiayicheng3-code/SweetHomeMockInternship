@@ -2046,7 +2046,6 @@ public class PlanComponent extends JComponent implements PlanView, Scrollable, P
         int pagesPerRow;
         int pagesPerColumn;
         if (this.home.getPrint() == null || this.home.getPrint().getPlanScale() == null) {
-          if (pageIndex > 0) return NO_SUCH_PAGE;
           // Compute a scale that ensures the plan will fill the component if plan scale is null
           printScale = getPrintPreferredScale(g, pageFormat) * LengthUnit.centimeterToInch(72);
           pagesPerRow = 1;
