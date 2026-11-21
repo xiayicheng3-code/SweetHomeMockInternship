@@ -2009,19 +2009,29 @@ public class PlanComponent extends JComponent implements PlanView, Scrollable, P
    */
   public int print(Graphics g, PageFormat pageFormat, int pageIndex) {
     Level originallySelected = this.home.getSelectedLevel();
-    List<Level> viewableLevels = new ArrayList<Level>();
-    for (Level level : this.home.getLevels()) {
-      if (level.isViewable()) {
-        viewableLevels.add(level);
+    Rectangle2D printedItemBounds;
+    List<Selectable> printedItems;
+    if (originallySelected == null){
+      printedItems = getPaintedItems();
+      printedItemBounds = getItemsBounds(g, printedItems);
+    }
+    else {
+      List<Level> viewableLevels = new ArrayList<Level>();
+
+      for (Level level : this.home.getLevels()) {
+        if (level.isViewable()) {
+          viewableLevels.add(level);
+        }
       }
-    }
-    if (pageIndex >= viewableLevels.size()) {
-      return NO_SUCH_PAGE;
-    }
-    try {
+      if (pageIndex >= viewableLevels.size()) {
+        return NO_SUCH_PAGE;
+      }
       this.home.setSelectedLevel(viewableLevels.get(pageIndex));
-      List<Selectable> printedItems = getPaintedItems();
-      Rectangle2D printedItemBounds = getItemsBounds(g, printedItems);
+      printedItems = getPaintedItems();
+      printedItemBounds = getItemsBounds(g, printedItems);
+    }
+
+    try{
       if (printedItemBounds != null) {
         double imageableX = pageFormat.getImageableX();
         double imageableY = pageFormat.getImageableY();
